@@ -48,7 +48,7 @@ RSpec.describe AntiFraudValidatorService do
         end
       end
 
-      context "when device id is not present" do
+      context "when device id is nil" do
         it "returns recommendation deny" do
           transaction_payload["device_id"] = nil
 
