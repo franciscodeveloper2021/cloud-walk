@@ -1,5 +1,6 @@
 class AntiFraudValidatorService
-  def say_hello
-    'Hello, world!'
+
+  def initialize(transaction_payload:)
+    @transaction_payload = transaction_payload
   end
 end
