@@ -27,10 +27,20 @@ RSpec.describe AntiFraudValidatorService do
 
   describe "#call" do
     context "with suspicious activity" do
+      context "when transaction amount exceeds the limit for transaction" do
+        it "returns recommendation deny" do
+          transaction_payload["transaction_amount"] = described_class::LIMIT_AMOUNT_FOR_TRANSACTION + 1
+
+          result = service.call
+
+          expect(result).to eq(transaction_response_dto_deny)
+        end
+      end
+
       context "when high transaction is happening at midnight" do
         it "returns recommendation deny" do
           transaction_payload["transaction_date"] = "2019-11-30T00:00:00.000000"
-          transaction_payload["transaction_amount"] = 2200
+          transaction_payload["transaction_amount"] = described_class::LIMIT_AMOUNT_FOR_TRANSACTION
 
           result = service.call
 
