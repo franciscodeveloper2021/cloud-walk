@@ -8,11 +8,9 @@ class AntiFraudValidatorService
   end
 
   def call
-    if is_any_condition_to_deny_true?
-      TransactionResponseDto.new(transaction_payload["transaction_id"], "deny")
-    else
-      TransactionResponseDto.new(transaction_payload["transaction_id"], "allow")
-    end
+    return TransactionResponseDto.new(transaction_payload["transaction_id"], "deny") if is_any_condition_to_deny_true?
+
+    TransactionResponseDto.new(transaction_payload["transaction_id"], "allow")
   end
 
   private
