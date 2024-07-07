@@ -23,13 +23,13 @@ class AntiFraudValidatorService
 
   def conditions
     [
-      :is_transaction_amount_too_high,
+      :is_transaction_amount_exceeding_the_limit?,
       :is_high_transaction_happening_at_midnight?,
       :is_device_id_nil?
     ]
   end
 
-  def is_transaction_amount_too_high
+  def is_transaction_amount_exceeding_the_limit?
     transaction_payload["transaction_amount"] > LIMIT_AMOUNT_FOR_TRANSACTION
   end
 
