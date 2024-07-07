@@ -17,7 +17,7 @@ RSpec.describe AntiFraudValidatorService do
   let(:service) { described_class.new(transaction_payload: transaction_payload) }
 
   let(:transaction_response_dto_deny) { TransactionResponseDto.new(transaction_payload["transaction_id"], "deny") }
-  let(:transaction_response_dto_allow) { TransactionResponseDto.new(transaction_payload["transaction_id"], "approve") }
+  let(:transaction_response_dto_approve) { TransactionResponseDto.new(transaction_payload["transaction_id"], "approve") }
 
   describe "#initialize" do
     it "initializes with transaction_payload as instance variable" do
@@ -46,6 +46,14 @@ RSpec.describe AntiFraudValidatorService do
 
           expect(result).to eq(transaction_response_dto_deny)
         end
+      end
+    end
+
+    context "when everything seems fine" do
+      it "returns recommendation approve" do
+        result = service.call
+
+        expect(result).to eq(transaction_response_dto_approve)
       end
     end
   end
