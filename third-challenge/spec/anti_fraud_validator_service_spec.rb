@@ -14,14 +14,25 @@ RSpec.describe AntiFraudValidatorService do
       "device_id" => 285475
     }
   end
-  let(:service) { described_class.new(transaction_payload: transaction_payload) }
+  let(:transactions_history) { [] }
+  let(:service) do
+    described_class.new(transaction_payload: transaction_payload, transactions_history: transactions_history)
+  end
 
-  let(:transaction_response_dto_deny) { TransactionResponseDto.new(transaction_payload["transaction_id"], "deny") }
-  let(:transaction_response_dto_approve) { TransactionResponseDto.new(transaction_payload["transaction_id"], "approve") }
+  let(:transaction_response_dto_deny) do
+    TransactionResponseDto.new(transaction_payload["transaction_id"], "deny")
+  end
+  let(:transaction_response_dto_approve) do
+    TransactionResponseDto.new(transaction_payload["transaction_id"], "approve")
+  end
 
   describe "#initialize" do
     it "initializes with transaction_payload as instance variable" do
       expect(service.instance_variable_get(:@transaction_payload)).to eq(transaction_payload)
+    end
+
+    it "initializes with transactions_history as instance variable" do
+      expect(service.instance_variable_get(:@transactions_history)).to eq(transactions_history)
     end
   end
 
@@ -55,6 +66,14 @@ RSpec.describe AntiFraudValidatorService do
           result = service.call
 
           expect(result).to eq(transaction_response_dto_deny)
+        end
+      end
+
+      context "when user is trying too many transactions in a row" do
+        it "returns recommendation deny" do
+
+
+
         end
       end
     end

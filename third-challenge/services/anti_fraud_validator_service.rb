@@ -1,12 +1,14 @@
 require 'date'
 
 class AntiFraudValidatorService
-  attr_reader :transaction_payload
+  attr_reader :transaction_payload, :transactions_history
 
   LIMIT_AMOUNT_FOR_TRANSACTION = 35000
+  MAX_TRANSACTIONS_PER_HOUR = 5
 
-  def initialize(transaction_payload:)
+  def initialize(transaction_payload:, transactions_history:)
     @transaction_payload = transaction_payload
+    @transactions_history = transactions_history
   end
 
   def call
@@ -23,6 +25,7 @@ class AntiFraudValidatorService
 
   def conditions
     [
+      :is_user_trying_too_many_transactions_in_a_row?,
       :is_transaction_amount_exceeding_the_limit?,
       :is_high_transaction_happening_at_midnight?,
       :is_device_id_nil?
@@ -40,5 +43,9 @@ class AntiFraudValidatorService
 
   def is_device_id_nil?
     transaction_payload["device_id"].nil?
+  end
+
+  def is_user_trying_too_many_transactions_in_a_row?
+    
   end
 end
