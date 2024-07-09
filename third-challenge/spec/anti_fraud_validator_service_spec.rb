@@ -56,7 +56,7 @@ RSpec.describe AntiFraudValidatorService do
           expect(result).to eq(transaction_response_dto_deny)
         end
       end
-  
+
       context "when user is trying too many transactions in a row" do
         it "returns recommendation deny" do
           transactions_history << {
