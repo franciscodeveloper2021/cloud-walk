@@ -58,6 +58,7 @@ class AntiFraudValidatorService
 
   def is_high_transaction_happening_at_midnight?
     transaction_date = DateTime.parse(transaction_payload["transaction_date"])
+
     transaction_date.hour == 0 && transaction_payload["transaction_amount"] >= LIMIT_AMOUNT_FOR_TRANSACTION
   end
 
