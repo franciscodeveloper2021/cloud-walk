@@ -86,6 +86,25 @@ RSpec.describe AntiFraudValidatorService do
           expect(result).to eq(transaction_response_dto_deny)
         end
       end
+
+      context "when any transaction on transaction history receives a charge back" do
+        it "returns recommendation deny" do
+          transactions_history << {
+            "transaction_id" => 2342356,
+            "merchant_id" => 29744,
+            "user_id" => 97051,
+            "card_number" => "434505******9116",
+            "transaction_date" => "2019-11-30T23:12:32.812632",
+            "transaction_amount" => 100,
+            "device_id" => 285475,
+            "has_charge_back" => true
+          }
+
+          result = service.call
+
+          expect(result).to eq(transaction_response_dto_deny)
+        end
+      end
     end
 
     context "when everything seems fine" do
