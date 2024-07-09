@@ -71,9 +71,19 @@ RSpec.describe AntiFraudValidatorService do
 
       context "when user is trying too many transactions in a row" do
         it "returns recommendation deny" do
+          transactions_history << {
+            "transaction_id" => 2342356,
+            "merchant_id" => 29744,
+            "user_id" => 97051,
+            "card_number" => "434505******9116",
+            "transaction_date" => (DateTime.parse(transaction_payload["transaction_date"]) - Rational(4, 24 * 60)).to_s, # 4 minutes earlier
+            "transaction_amount" => 100,
+            "device_id" => 285475
+          }
 
+          result = service.call
 
-
+          expect(result).to eq(transaction_response_dto_deny)
         end
       end
     end
