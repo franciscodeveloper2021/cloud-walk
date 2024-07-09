@@ -4,7 +4,6 @@ class AntiFraudValidatorService
   attr_reader :transaction_payload, :transactions_history
 
   LIMIT_AMOUNT_FOR_TRANSACTION = 35000
-  MAX_TRANSACTIONS_PER_HOUR = 5
 
   def initialize(transaction_payload:, transactions_history:)
     @transaction_payload = transaction_payload
