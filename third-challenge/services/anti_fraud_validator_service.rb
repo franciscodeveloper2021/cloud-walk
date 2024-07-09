@@ -36,6 +36,8 @@ class AntiFraudValidatorService
   end
 
   def is_any_transaction_in_history_has_charge_back?
+    return false if transactions_history.empty?
+
     transactions_history.any? { |transaction| transaction["has_charge_back"] }
   end
 
