@@ -76,7 +76,7 @@ RSpec.describe AntiFraudValidatorService do
             "merchant_id" => 29744,
             "user_id" => 97051,
             "card_number" => "434505******9116",
-            "transaction_date" => (DateTime.parse(transaction_payload["transaction_date"]) - Rational(4, 24 * 60)).to_s, # 4 minutes earlier
+            "transaction_date" => (DateTime.parse(transaction_payload["transaction_date"]) - Rational(4, 24 * 60)).to_s,
             "transaction_amount" => 100,
             "device_id" => 285475
           }
