@@ -94,6 +94,12 @@ RSpec.describe AntiFraudValidatorService do
 
         expect(result).to eq(transaction_response_dto_approve)
       end
+
+      it "adds transaction payload on transaction history" do
+        service.call
+
+        expect(transactions_history.last).to eq(transaction_payload)
+      end
     end
   end
 end
