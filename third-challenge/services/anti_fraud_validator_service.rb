@@ -53,6 +53,6 @@ class AntiFraudValidatorService
 
     time_difference_in_minutes = ((upcoming_transaction_date - latest_transaction_date) * 24 * 60).to_f
 
-    time_difference_in_minutes <=5
+    time_difference_in_minutes < 5
   end
 end
